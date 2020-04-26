@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         serviceSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Is the switch is on?
                 boolean on = ((Switch) v).isChecked();
                 if (on) {
                     //Do something when switch is on/checked
