@@ -16,6 +16,8 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 
 public class AccelerometerService extends Service implements SensorEventListener {
     private SensorManager mSensorManager;
@@ -23,6 +25,12 @@ public class AccelerometerService extends Service implements SensorEventListener
     private float mAccel; // acceleration apart from gravity
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
+
+    private Sensor mGyroscope;
+
+    //
+    ArrayList<float[]> acc_data;
+    ArrayList<float[]> gyro_data;
 
     @Nullable
     @Override
@@ -35,13 +43,47 @@ public class AccelerometerService extends Service implements SensorEventListener
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI, new Handler());
+
+        //also add gyroscope stuff
+        mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        mSensorManager.registerListener(this,mGyroscope,SensorManager.SENSOR_DELAY_GAME);
         return START_STICKY;
     }
 
 
 
     @Override
-    public void onSensorChanged(SensorEvent event) {
+    public void onSensorChanged(SensorEvent sensorEvent) {
+
+
+        if(sensorEvent.sensor.getType()==Sensor.TYPE_GYROSCOPE){
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+
+            float[] temp = {x,y,z};
+            gyro_data.add(temp);
+            //679 is the length of the window we used for training
+            if(gyro_data.size() > 679){
+                gyro_data.remove(0);
+            }
+
+
+        }
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
+            float[] temp = {x,y,z};
+            acc_data.add(temp);
+            if(acc_data.size() > 679){
+                acc_data.remove(0);
+            }
+
+
+
+        }
+        /*
         float x = event.values[0];
         float y = event.values[1];
         float z = event.values[2];
@@ -53,7 +95,7 @@ public class AccelerometerService extends Service implements SensorEventListener
         if (mAccel > 11) {
             NotificationHelper helper = new NotificationHelper(this);
             helper.createNotification("Fall Detector Running", "To stop, close in app");
-        }
+        }*/
     }
 
     @Override
