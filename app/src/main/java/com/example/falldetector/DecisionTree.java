@@ -158,19 +158,22 @@ public class DecisionTree {
     public String predict(){
         if(a_max_mag <= 38.078){
             if(ax_mean <= 37.893){
-                return "Not Fall";
+                return "Not Fall"+a_max_mag;
             }
             else{
                 return "Fall";
             }
         }
         else{
+            return "Fall";
+            /*
             if(g_mag_mean < 6.354){
-                return "Not Fall";
+                //return "Not Fall"+a_max_mag;
             }
             else{
-                return "Fall";
+                //return "Fall";
             }
+             */
         }
     }
 }

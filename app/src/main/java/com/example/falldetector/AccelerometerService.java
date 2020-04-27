@@ -48,7 +48,7 @@ public class AccelerometerService extends Service implements SensorEventListener
     public int onStartCommand(Intent intent, int flags, int startId) {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI, new Handler());
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME, new Handler());
 
         //also add gyroscope stuff
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
@@ -70,11 +70,13 @@ public class AccelerometerService extends Service implements SensorEventListener
                 tree.features(acc_data, gyro_data);
                 String test = tree.predict();
 
-
+                if(test.equals("Fall")){
+                    helper.createNotification("Did you fall", "" + test);
+                }
                     //Log.d(TAG,acc_data.size() +":::" +  gyro_data.size());
-                helper.createNotification("Did you fall", "" + test);
-                
-                handler.postDelayed(this, 10000);
+
+
+                handler.postDelayed(this, 1000);
             }
         }, delay);
 
