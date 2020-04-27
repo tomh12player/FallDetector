@@ -156,6 +156,21 @@ public class DecisionTree {
         return max;
     }
     public String predict(){
-        return "PLACEHOLDER";
+        if(a_max_mag <= 38.078){
+            if(ax_mean <= 37.893){
+                return "Not Fall";
+            }
+            else{
+                return "Fall";
+            }
+        }
+        else{
+            if(g_mag_mean < 6.354){
+                return "Not Fall";
+            }
+            else{
+                return "Fall";
+            }
+        }
     }
 }

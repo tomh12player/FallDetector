@@ -33,6 +33,7 @@ public class AccelerometerService extends Service implements SensorEventListener
 
     private Sensor mGyroscope;
 
+    NotificationHelper helper = new NotificationHelper(this);
     //
     ArrayList<float[]> acc_data;
     ArrayList<float[]> gyro_data;
@@ -91,13 +92,17 @@ public class AccelerometerService extends Service implements SensorEventListener
                 acc_data.remove(0);
             }
         }
-        if(acc_data.size() < 0){
-            NotificationHelper helper = new NotificationHelper(this);
+
+        DecisionTree tree = new DecisionTree();
+        tree.features(acc_data, gyro_data);
+        String test = tree.predict();
+
+        if(test.equals("Fall")){
+
             //Log.d(TAG,acc_data.size() +":::" +  gyro_data.size());
-            helper.createNotification("Size of gyro and acc", "" + acc_data.size() +":::" +  gyro_data.size());
+            helper.createNotification("You died", "" + test);
 
         }
-
 
         /*
         float x = event.values[0];
@@ -119,7 +124,7 @@ public class AccelerometerService extends Service implements SensorEventListener
     }
 
     public void onDestroy(){
-
+        helper.removeNotification();
     }
 
 
