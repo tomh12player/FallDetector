@@ -65,7 +65,7 @@ public class DecisionTree {
         float[] a_mag = magnitude(accel);
         a_mag_mean = mag_mean(a_mag);
         a_mag_var = mag_var(a_mag);
-        a_max_mag = //fill in ;
+        a_max_mag = max(a_mag); //fill in ;
 
         float[] g_mag = magnitude(gyro);
         g_mag_mean = mag_mean(g_mag);
@@ -122,6 +122,21 @@ public class DecisionTree {
         return temp;
     }
 
+    private float[] magnitude(ArrayList<float[]> arr){
+        float[] temp = new float[arr.size()];
+        for(int j = 0; j < arr.size(); ++j){
+            float x = arr.get(j)[0];
+            float y = arr.get(j)[1];
+            float z = arr.get(j)[2];
+
+            float mag = (float) Math.sqrt((x*x) + (y*y) + (z*z));
+            temp[j] = (mag);
+        }
+        return temp;
+    }
+
+
+
     private float mag_mean(float[] arr){
         float sum = 0;
         for(int i = 0; i < arr.length; i++){
@@ -142,6 +157,16 @@ public class DecisionTree {
             temp[j] = (mag);
         }
         return temp;
+    }
+
+    private float max(float[] arr){
+        float max = 0;
+        for(int j = 0; j < arr.length; ++j){
+            if (arr[j] > max){
+                max = arr[j];
+            }
+        }
+        return max;
     }
     public String predict(){
         return "PLACEHOLDER";
