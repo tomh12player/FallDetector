@@ -59,8 +59,29 @@ public class AccelerometerService extends Service implements SensorEventListener
         acc_data = new ArrayList<>();
         gyro_data = new ArrayList<>();
 
+
+        final Handler handler = new Handler();
+        int delay = 1000; //milliseconds
+
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                //do something
+                DecisionTree tree = new DecisionTree();
+                tree.features(acc_data, gyro_data);
+                String test = tree.predict();
+
+
+                    //Log.d(TAG,acc_data.size() +":::" +  gyro_data.size());
+                helper.createNotification("Did you fall", "" + test);
+                
+                handler.postDelayed(this, 10000);
+            }
+        }, delay);
+
         return START_STICKY;
         //return START_NOT_STICKY;
+
+
     }
 
 
@@ -93,16 +114,7 @@ public class AccelerometerService extends Service implements SensorEventListener
             }
         }
 
-        DecisionTree tree = new DecisionTree();
-        tree.features(acc_data, gyro_data);
-        String test = tree.predict();
 
-        if(test.equals("Fall")){
-
-            //Log.d(TAG,acc_data.size() +":::" +  gyro_data.size());
-            helper.createNotification("You died", "" + test);
-
-        }
 
         /*
         float x = event.values[0];
