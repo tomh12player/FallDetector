@@ -146,19 +146,6 @@ public class DecisionTree {
         return mean;
     }
 
-    private float[] magnitude(ArrayList<float[]> arr){
-        float[] temp = new float[arr.size()];
-        for(int j = 0; j < arr.size(); ++j){
-            float x = arr.get(j)[0];
-            float y = arr.get(j)[1];
-            float z = arr.get(j)[2];
-
-            float mag = (float) Math.sqrt((x*x) + (y*y) + (z*z));
-            temp[j] = (mag);
-        }
-        return temp;
-    }
-
     private float max(float[] arr){
         float max = 0;
         for(int j = 0; j < arr.length; ++j){
