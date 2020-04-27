@@ -10,13 +10,17 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.nfc.Tag;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 
 public class AccelerometerService extends Service implements SensorEventListener {
@@ -25,6 +29,7 @@ public class AccelerometerService extends Service implements SensorEventListener
     private float mAccel; // acceleration apart from gravity
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
+
 
     private Sensor mGyroscope;
 
@@ -47,8 +52,16 @@ public class AccelerometerService extends Service implements SensorEventListener
         //also add gyroscope stuff
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         mSensorManager.registerListener(this,mGyroscope,SensorManager.SENSOR_DELAY_GAME);
+
+
+        //initialize the arrays
+        acc_data = new ArrayList<>();
+        gyro_data = new ArrayList<>();
+
         return START_STICKY;
+        //return START_NOT_STICKY;
     }
+
 
 
 
@@ -67,8 +80,6 @@ public class AccelerometerService extends Service implements SensorEventListener
             if(gyro_data.size() > 679){
                 gyro_data.remove(0);
             }
-
-
         }
         if(sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
             float x = sensorEvent.values[0];
@@ -79,10 +90,15 @@ public class AccelerometerService extends Service implements SensorEventListener
             if(acc_data.size() > 679){
                 acc_data.remove(0);
             }
-
-
+        }
+        if(acc_data.size() < 0){
+            NotificationHelper helper = new NotificationHelper(this);
+            //Log.d(TAG,acc_data.size() +":::" +  gyro_data.size());
+            helper.createNotification("Size of gyro and acc", "" + acc_data.size() +":::" +  gyro_data.size());
 
         }
+
+
         /*
         float x = event.values[0];
         float y = event.values[1];

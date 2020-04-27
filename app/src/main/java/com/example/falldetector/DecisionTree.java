@@ -15,7 +15,7 @@ public class DecisionTree {
     private float gy_mean;
     private float gz_var;
     private float gz_mean;
-    private float a_mag_mean
+    private float a_mag_mean;
     private float g_mag_mean;
     private float a_mag_var;
     private float g_mag_var;
@@ -34,7 +34,7 @@ public class DecisionTree {
         gy_mean = 0;
         gz_var = 0;
         gz_mean= 0;
-        a_mag_mean = 0
+        a_mag_mean = 0;
         g_mag_mean = 0;
         a_mag_var = 0;
         g_mag_var = 0;
@@ -46,6 +46,31 @@ public class DecisionTree {
         ax_mean = accelMean[0];
         ay_mean = accelMean[1];
         az_mean = accelMean[2];
+
+        float[] gyroMean = mean(gyro);
+        gx_mean = gyroMean[0];
+        gy_mean = gyroMean[1];
+        gz_mean = gyroMean[2];
+
+        float[]
+    }
+
+    private float[] var(ArrayList<float[]> arr){
+        float[] mean = mean(arr);
+
+        float[] var = {0,0,0};
+
+        //outer loop for x y and z
+        for( int i = 0; i < 3; ++i){
+            //inner loop for all the rows in arr
+            for(int j = 0; j < arr.size(); ++j){
+                float diff = arr.get(j)[i] - mean[i];
+                float square = diff * diff;
+                var[i]+=square;
+            }
+            var[i] = var[i]/(arr.size()-1);
+        }
+        return var;
     }
 
     private float[] mean(ArrayList<float[]> arr){
@@ -64,5 +89,7 @@ public class DecisionTree {
         return temp;
     }
 
-    public String predict()
+    public String predict(){
+        return "PLACEHOLDER";
+    }
 }
