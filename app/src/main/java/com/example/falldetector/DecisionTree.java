@@ -52,7 +52,26 @@ public class DecisionTree {
         gy_mean = gyroMean[1];
         gz_mean = gyroMean[2];
 
-        float[]
+        float[] accelVariance = var(accel);
+        ax_var = accelVariance[0];
+        ay_var = accelVariance[0];
+        az_var = accelVariance[0];
+
+        float[] gyroVariance = var(gyro);
+        gx_var = gyroVariance[0];
+        gy_var = gyroVariance[0];
+        gz_var = gyroVariance[0];
+
+        float[] a_mag = magnitude(accel);
+        a_mag_mean = mag_mean(a_mag);
+        a_mag_var = mag_var(a_mag);
+        a_max_mag = //fill in ;
+
+        float[] g_mag = magnitude(gyro);
+        g_mag_mean = mag_mean(g_mag);
+        g_mag_var = mag_var(g_mag);
+
+
     }
 
     private float[] var(ArrayList<float[]> arr){
