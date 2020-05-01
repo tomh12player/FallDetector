@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Button call;
     Switch serviceSwitch;
 
+    boolean makeCall;
+
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Phone = "phoneKey";
     private static final int REQUEST_CALL = 1;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         save = findViewById(R.id.button);
         serviceSwitch = findViewById(R.id.switch1);
         call = findViewById(R.id.button2);
+
+        makeCall = true;
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final Intent intent = new Intent(this, AccelerometerService.class);
@@ -88,11 +93,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final Handler handler = new Handler();
+        int delay = 1000; //milliseconds
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                //do something
+                if(AccelerometerService.makeCall && makeCall){
+                    makePhoneCall();
+                    makeCall = false;
+                }
+                //Log.d(TAG,acc_data.size() +":::" +  gyro_data.size());
+
+
+                handler.postDelayed(this, 1000);
+            }
+        }, delay);
+
     }
 
     private void makePhoneCall() {
 //        String number = "9784894787";
-        String number = sharedpreferences.getString("Phone", null);
+        String number = sharedpreferences.getString(Phone, null);
         if (number.trim().length() > 0) {
 
             if (ContextCompat.checkSelfPermission(MainActivity.this,

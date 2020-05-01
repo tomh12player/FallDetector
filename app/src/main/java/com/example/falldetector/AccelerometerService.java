@@ -17,10 +17,12 @@ import android.nfc.Tag;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,7 @@ public class AccelerometerService extends Service implements SensorEventListener
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
 
+    static boolean makeCall = false;
 
     private boolean fell;
     private int count;
@@ -82,8 +85,7 @@ public class AccelerometerService extends Service implements SensorEventListener
                 if(test.equals("Fall") && fell == false){
                     fell = true;
                     helper.createNotification("Did you fall", "" + test);
-                    make_call("asdf");
-
+                    makeCall = true;
                 }
                 else if(fell == true){
                     count ++;
@@ -106,18 +108,7 @@ public class AccelerometerService extends Service implements SensorEventListener
 
     }
 
-    public void make_call(String number){
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:5086636793"));
 
-
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG,"You didn't have permission");
-            return;
-        }
-        startActivity(callIntent);
-    }
 
 
 
