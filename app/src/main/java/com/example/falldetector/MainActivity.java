@@ -1,7 +1,9 @@
 package com.example.falldetector;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
@@ -25,10 +27,12 @@ public class MainActivity extends AppCompatActivity {
     EditText phoneNumber;
     TextView serviceText;
     Button save;
+    Button call;
     Switch serviceSwitch;
 
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Phone = "phoneKey";
+    private static final int REQUEST_CALL = 1;
 
     SharedPreferences sharedpreferences;
 
@@ -41,10 +45,11 @@ public class MainActivity extends AppCompatActivity {
         serviceText = findViewById(R.id.serviceText);
         save = findViewById(R.id.button);
         serviceSwitch = findViewById(R.id.switch1);
+        call = findViewById(R.id.button2);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final Intent intent = new Intent(this, AccelerometerService.class);
-
+//        final Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "9784894787"));
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString(Phone, number);
                 editor.commit();
                 Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makePhoneCall();
             }
         });
 
@@ -76,7 +90,33 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void makePhoneCall() {
+//        String number = "9784894787";
+        String number = sharedpreferences.getString("Phone", null);
+        if (number.trim().length() > 0) {
 
+            if (ContextCompat.checkSelfPermission(MainActivity.this,
+                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+            } else {
+                String dial = "tel:" + number;
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+            }
 
+        } else {
+            Toast.makeText(MainActivity.this, "Enter Phone Number", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CALL) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                makePhoneCall();
+            } else {
+                Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }

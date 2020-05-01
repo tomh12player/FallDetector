@@ -26,7 +26,7 @@ public class NotificationHelper {
     public void createNotification(String title, String message)
     {
         /**Creates an explicit intent for an Activity in your app**/
-        Intent resultIntent = new Intent(mContext , AccelerometerService.class);
+        Intent resultIntent = new Intent(mContext , MainActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
