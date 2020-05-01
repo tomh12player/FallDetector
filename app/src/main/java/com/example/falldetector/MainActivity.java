@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     boolean makeCall;
 
+    static boolean falseAlarm;
+
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Phone = "phoneKey";
     private static final int REQUEST_CALL = 1;

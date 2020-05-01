@@ -14,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.nfc.Tag;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
@@ -85,7 +86,25 @@ public class AccelerometerService extends Service implements SensorEventListener
                 if(test.equals("Fall") && fell == false){
                     fell = true;
                     helper.createNotification("Did you fall", "" + test);
-                    makeCall = true;
+                    new CountDownTimer(10000, 3000) {
+
+                        public void onTick(long millisUntilFinished) {
+
+
+                        }
+
+                        public void onFinish() {
+                            if(MainActivity.falseAlarm){
+
+                            }
+                            else{
+                                makeCall = true;
+                            }
+
+                        }
+
+                    }.start();
+
                 }
                 else if(fell == true){
                     count ++;
