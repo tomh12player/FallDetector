@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String Phone = "phoneKey";
     private static final int REQUEST_CALL = 1;
+    public boolean FalseAlarm = false;
 
     SharedPreferences sharedpreferences;
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makePhoneCall();
+                FalseAlarm = true;
             }
         });
 
