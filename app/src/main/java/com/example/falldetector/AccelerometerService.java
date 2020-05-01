@@ -1,15 +1,18 @@
 package com.example.falldetector;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Handler;
 import android.os.IBinder;
@@ -17,6 +20,7 @@ import android.util.Log;
 
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 
@@ -31,6 +35,8 @@ public class AccelerometerService extends Service implements SensorEventListener
     private float mAccelLast; // last acceleration including gravity
 
 
+    private boolean fell;
+    private int count;
     private Sensor mGyroscope;
 
     NotificationHelper helper = new NotificationHelper(this);
@@ -59,6 +65,9 @@ public class AccelerometerService extends Service implements SensorEventListener
         acc_data = new ArrayList<>();
         gyro_data = new ArrayList<>();
 
+        fell = false;
+        count = 0;
+
 
         final Handler handler = new Handler();
         int delay = 1000; //milliseconds
@@ -70,9 +79,20 @@ public class AccelerometerService extends Service implements SensorEventListener
                 tree.features(acc_data, gyro_data);
                 String test = tree.predict();
 
-                if(test.equals("Fall")){
+                if(test.equals("Fall") && fell == false){
+                    fell = true;
                     helper.createNotification("Did you fall", "" + test);
+                    make_call("asdf");
+
                 }
+                else if(fell == true){
+                    count ++;
+                    if(count ==12){
+                        fell = false;
+                        count = 0;
+                    }
+                }
+
                     //Log.d(TAG,acc_data.size() +":::" +  gyro_data.size());
 
 
@@ -85,6 +105,22 @@ public class AccelerometerService extends Service implements SensorEventListener
 
 
     }
+
+    public void make_call(String number){
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:5086636793"));
+
+
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG,"You didn't have permission");
+            return;
+        }
+        startActivity(callIntent);
+    }
+
+
+
 
 
 
