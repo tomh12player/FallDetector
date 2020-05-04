@@ -76,6 +76,9 @@ public class AccelerometerService extends Service implements SensorEventListener
         final Handler handler = new Handler();
         int delay = 1000; //milliseconds
 
+        final Intent resultIntent = new Intent(this , MainActivity.class);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
         handler.postDelayed(new Runnable(){
             public void run(){
                 //do something
@@ -86,6 +89,7 @@ public class AccelerometerService extends Service implements SensorEventListener
                 if(test.equals("Fall") && fell == false){
                     fell = true;
                     helper.createNotification("Did you fall", "" + test);
+                    startActivity(resultIntent);
                     new CountDownTimer(10000, 3000) {
 
                         public void onTick(long millisUntilFinished) {
