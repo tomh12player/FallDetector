@@ -3,6 +3,7 @@
     package="com.example.falldetector">
 
 
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
         android:allowBackup="true"
@@ -10,13 +11,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        >
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <service android:name="com.example.falldetector.AccelerometerService" />
     </application>

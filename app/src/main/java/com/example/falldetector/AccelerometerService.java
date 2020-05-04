@@ -86,6 +86,11 @@ public class AccelerometerService extends Service implements SensorEventListener
                 if(test.equals("Fall") && fell == false){
                     fell = true;
                     helper.createNotification("Did you fall", "" + test);
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    getApplicationContext().startActivity(intent);
+
                     new CountDownTimer(10000, 3000) {
 
                         public void onTick(long millisUntilFinished) {
