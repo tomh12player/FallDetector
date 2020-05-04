@@ -29,7 +29,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="0.785"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/button"
@@ -87,7 +88,6 @@
         android:id="@+id/textView2"
         android:layout_width="259dp"
         android:layout_height="142dp"
-        android:alpha="@android:dimen/app_icon_size"
         android:gravity="center"
         android:text='This application requires the "Display/Draw Over Other Apps" permission. To enable this, naviagate to this applications settings by navigating to Settings -> Apps -> Special App Access -> Display over other apps -> Fall Detector to enable.'
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
