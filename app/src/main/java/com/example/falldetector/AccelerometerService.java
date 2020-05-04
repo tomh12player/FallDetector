@@ -111,6 +111,7 @@ public class AccelerometerService extends Service implements SensorEventListener
                         public void onFinish() {
                             if(MainActivity.FalseAlarm){
                                 Log.d(TAG,"It was a false alarm");
+                                MainActivity.FalseAlarm = false;
                             }
                             else{
 //                                String number = sharedpreferences.getString(Phone, null);
