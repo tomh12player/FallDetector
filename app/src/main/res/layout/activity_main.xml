@@ -99,8 +99,8 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="281dp"
-        android:layout_height="52dp"
+        android:layout_width="322dp"
+        android:layout_height="108dp"
         android:gravity="center"
         android:text="Enabling this service will detect falls. When a Fall is detected, this application will launch. If the &quot;Press if you're Alright&quot; button is not clicked in 10 seconds, the saved number will be called."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
