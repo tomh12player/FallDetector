@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -49,6 +50,12 @@ public class AccelerometerService extends Service implements SensorEventListener
     ArrayList<float[]> acc_data;
     ArrayList<float[]> gyro_data;
 
+    private final int REQUEST_CALL = 1;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String Phone = "phoneKey";
+    SharedPreferences sharedpreferences;
+
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -65,6 +72,8 @@ public class AccelerometerService extends Service implements SensorEventListener
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         mSensorManager.registerListener(this,mGyroscope,SensorManager.SENSOR_DELAY_GAME);
 
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String number = sharedpreferences.getString(Phone, null);
 
         //initialize the arrays
         acc_data = new ArrayList<>();
@@ -77,7 +86,7 @@ public class AccelerometerService extends Service implements SensorEventListener
         final Handler handler = new Handler();
         int delay = 1000; //milliseconds
 
-        final Intent resultIntent = new Intent(this , MainActivity.class);
+        final Intent resultIntent = new Intent(getApplicationContext() , MainActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         handler.postDelayed(new Runnable(){
@@ -104,6 +113,8 @@ public class AccelerometerService extends Service implements SensorEventListener
                                 Log.d(TAG,"It was a false alarm");
                             }
                             else{
+//                                String number = sharedpreferences.getString(Phone, null);
+//                                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(number)));
                                 makeCall = true;
                             }
 
@@ -191,6 +202,8 @@ public class AccelerometerService extends Service implements SensorEventListener
     public void onDestroy(){
         helper.removeNotification();
     }
+
+
 
 
 

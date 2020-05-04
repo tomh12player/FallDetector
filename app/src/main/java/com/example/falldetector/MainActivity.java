@@ -24,12 +24,12 @@ import android.widget.Toast;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText phoneNumber;
     TextView serviceText;
+    TextView currNumber;
     Button save;
     Button call;
     Switch serviceSwitch;
@@ -55,12 +55,16 @@ public class MainActivity extends AppCompatActivity {
         save = findViewById(R.id.button);
         serviceSwitch = findViewById(R.id.switch1);
         call = findViewById(R.id.button2);
+        currNumber = findViewById(R.id.textView);
 
         makeCall = true;
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         final Intent intent = new Intent(this, AccelerometerService.class);
 //        final Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "9784894787"));
+
+        String number = sharedpreferences.getString(Phone, null);
+        currNumber.setText("Current Saved Phone Number: " + (number));
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
