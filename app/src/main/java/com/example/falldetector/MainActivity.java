@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 
                 editor.putString(Phone, number);
                 editor.commit();
+                number = sharedpreferences.getString(Phone, null);
+                currNumber.setText("Current Saved Phone Number: " + (number));
                 Toast.makeText(MainActivity.this,"Saved",Toast.LENGTH_LONG).show();
 
 

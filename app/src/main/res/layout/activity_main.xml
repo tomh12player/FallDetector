@@ -18,22 +18,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.693" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Service"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.427" />
-
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="269dp"
+        android:layout_height="51dp"
         android:ems="10"
         android:hint="Input New Phone Number Here"
         android:inputType="phone"
@@ -41,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.785" />
 
     <Button
         android:id="@+id/button"
@@ -65,8 +53,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.375"
+        app:layout_constraintVertical_bias="0.411"
         tools:text="Service is off..." />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Service"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.464" />
 
     <Button
         android:id="@+id/button2"
@@ -78,10 +78,36 @@
         android:text="Press if you're Alright!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023"
         tools:text="Press if you're Alright!" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="259dp"
+        android:layout_height="142dp"
+        android:alpha="@android:dimen/app_icon_size"
+        android:gravity="center"
+        android:text='This application requires the "Display/Draw Over Other Apps" permission. To enable this, naviagate to this applications settings by navigating to Settings -> Apps -> Special App Access -> Display over other apps -> Fall Detector to enable.'
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.213" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="281dp"
+        android:layout_height="52dp"
+        android:gravity="center"
+        android:text="Enabling this service will detect falls. When a Fall is detected, this application will launch. If the &quot;Press if you're Alright&quot; button is not clicked in 10 seconds, the saved number will be called."
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
