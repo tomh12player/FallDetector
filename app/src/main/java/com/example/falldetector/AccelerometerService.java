@@ -21,6 +21,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -89,6 +90,7 @@ public class AccelerometerService extends Service implements SensorEventListener
                 if(test.equals("Fall") && fell == false){
                     fell = true;
                     helper.createNotification("Did you fall", "" + test);
+                    Log.d(TAG, "trying to start the intent");
                     startActivity(resultIntent);
                     new CountDownTimer(10000, 3000) {
 
@@ -130,7 +132,6 @@ public class AccelerometerService extends Service implements SensorEventListener
 
 
     }
-
 
 
 
